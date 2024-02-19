@@ -16,6 +16,13 @@ export class EmailProcessor {
     public constructor(private bot: MatrixBot, private db: DataStore) {
         if (config.mail.enabled) {
             mailin.start({
+                port: config.mail.port,
+                logLevel: "silly",
+                smtpOptions: {
+                    banner: "",
+                    disableDNSValidation: false
+                }
+            });
 
             mailin.on('startMessage', function(connection) {
                 console.log(connection);
