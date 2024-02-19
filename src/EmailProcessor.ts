@@ -89,6 +89,7 @@ export class EmailProcessor {
                         if (!fromAddress.address) continue;
 
                         if (!roomConfig.allowedSenders.includes(fromAddress.address.toLowerCase())) {
+                            console.log(fromAddress.address, ' is not in Alllowed Senders List')
                             allowed = false;
                             break;
                         }
@@ -99,6 +100,7 @@ export class EmailProcessor {
                     if (!fromAddress.address) continue;
 
                     if (roomConfig.blockedSenders.includes(fromAddress.address.toLowerCase())) {
+                        console.log(fromAddress.address, ' is in Blocked Senders List')
                         allowed = false;
                         break;
                     }
