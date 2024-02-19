@@ -22,6 +22,10 @@ export class EmailProcessor {
             mailin.on('message', (connection, data, content) => {
                 this.processMessage(data).then();
             });
+
+            mailin.on("error", async error => {
+                console.log(error);
+            });
         }
     }
 
