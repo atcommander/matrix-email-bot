@@ -16,7 +16,9 @@ export class EmailProcessor {
     public constructor(private bot: MatrixBot, private db: DataStore) {
         if (config.mail.enabled) {
             mailin.start({
-                port: config.mail.port
+
+            mailin.on('startMessage', function(connection) {
+                console.log(connection);
             });
 
             mailin.on('message', (connection, data, content) => {
