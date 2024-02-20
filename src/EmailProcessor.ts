@@ -25,6 +25,7 @@ export class EmailProcessor {
             });
 
             mailin.on('message', (connection, data, content) => {
+                console.log("Message Found")
                 this.processMessage(data).then();
             });
 
@@ -36,6 +37,7 @@ export class EmailProcessor {
 
     public async processMessage(message: any) {
         if (await this.db.doesMessageExist(message.messageId)) {
+            console.log("Message Already Processed");
             return;
         }
 
@@ -48,6 +50,7 @@ export class EmailProcessor {
         const primaryFrom = message.from.value[0];
 
         const rooms: string[] = [];
+        console.log("Processing targets...");
         for (const target of targets) {
             if (!target.address) continue;
 
