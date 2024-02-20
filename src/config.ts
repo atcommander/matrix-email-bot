@@ -17,6 +17,7 @@ export interface IRoomConfig {
         blockedTypes: string[];
     };
     postReplies: boolean;
+    postEmpty: boolean;
     messageFormat: string;
     fragmentFormat: string;
     messagePlainFormat: string;

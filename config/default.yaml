@@ -116,6 +116,8 @@ defaultRoomConfig:
   # message. By default this is turned off to avoid flooding the room with quoted messages.
   postReplies: false
 
+  postEmpty: false
+
   # The message format for messages posted to the room. This format only applies to the first
   # message, all other messages (replies, signatures, etc) will use the fragmentFormat. Valid
   # variables are:

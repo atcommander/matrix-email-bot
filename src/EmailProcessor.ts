@@ -141,7 +141,7 @@ export class EmailProcessor {
 
                 textSegments = textSegments.filter(s => s.trim().length > 0);
 
-                if (textSegments.length == 0) {
+                if (textSegments.length == 0 && roomConfig.postEmpty) {
                     textSegments = [""];   
                 }
 
