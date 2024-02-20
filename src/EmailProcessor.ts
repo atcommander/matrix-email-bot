@@ -141,6 +141,10 @@ export class EmailProcessor {
 
                 textSegments = textSegments.filter(s => s.trim().length > 0);
 
+                if (textSegments.length == 0) {
+                    textSegments = [""];   
+                }
+
                 const dbMessages: IDbMessage[] = [];
                 for (const segment of textSegments) {
                     dbMessages.push({
