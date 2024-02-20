@@ -46,14 +46,8 @@ export class EmailProcessor {
         const targets: IEmailTarget[] = [];
 
         for (const email of (message.to.value || [])) targets.push({ address: email.address.toLowerCase(), name: email.name, source: 'to' });
-
-        if (!message.cc.value) {
-            for (const email of (message.cc.value || [])) targets.push({ address: email.address.toLowerCase(), name: email.name, source: 'cc' });
-        }
-        
-        if (!message.bcc.value) {
-            for (const email of (message.bcc.value || [])) targets.push({ address: email.address.toLowerCase(), name: email.name, source: 'bcc' });
-        }
+        for (const email of (message.cc?.value || [])) targets.push({ address: email.address.toLowerCase(), name: email.name, source: 'cc' });
+        for (const email of (message.bcc?.value || [])) targets.push({ address: email.address.toLowerCase(), name: email.name, source: 'bcc' });
 
         const primaryFrom = message.from.value[0];
 
