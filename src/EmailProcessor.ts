@@ -24,10 +24,6 @@ export class EmailProcessor {
                 }
             });
 
-            mailin.on('startMessage', function(connection) {
-                console.log(connection);
-            });
-
             mailin.on('message', (connection, data, content) => {
                 this.processMessage(data).then();
             });
