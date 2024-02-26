@@ -172,7 +172,21 @@ export class EmailProcessor {
                         msg = await this.db.getMessage(messageId);
                     }
 
-                    await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
+                    let messageStatus;
+                    let messageRetries = 0;
+                    do {
+                        messageStatus = await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
+
+                        console.log(messageStatus);
+
+                        if (messageStatus.retryAfterMs > 0) {
+                            await console.log("Waiting for " + messageStatus.retryAfterMs + " Ms...")
+                            setTimeout(() => {  console.log('...Resending Message'); }, messageStatus.retryAfterMs);
+                        }
+
+                        messageRetries = messageRetries + 1;
+                    } while (messageStatus.statusCode != 200 || messageRetries >= 5);
+
                     msgType = MessageType.Fragment;
                 }
                 for (const attachment of attachments) {

@@ -79,7 +79,23 @@ export class MatrixBot {
             content["format"] = "org.matrix.custom.html";
         }
 
-        await this.client.sendMessage(roomId, content);
+        try {
+            await this.client.sendMessage(roomId, content).catch();
+            
+            return {
+                message: "Message Sent",
+                errcode: "",
+                statusCode: 200,
+                retryAfterMs: 0
+            };
+        } catch (error) {
+            return {
+                message: error.error,
+                errcode: error.errcode,
+                statusCode: error.statusCode,
+                retryAfterMs: error.retryAfterMs
+            };
+        }
     }
 
     public async sendAttachment(attachment: any, roomId: string) {
