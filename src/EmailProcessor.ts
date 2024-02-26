@@ -176,10 +176,10 @@ export class EmailProcessor {
                     let messageStatus;
                     let messageRetries = 1;
                     do {
-                        await console.log("Waiting for " + messageStatus.retryAfterMs + " Ms...");
+                        console.log("Waiting for " + this.waittime + " Ms...");
                         await new Promise(f => setTimeout(f, this.waittime));
 
-                        await console.log('...Retry #' + messageRetries + ' of Message ' + message.email_id);
+                        console.log('...Retry #' + messageRetries + ' of Message ' + message.email_id);
                         messageStatus = await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
 
                         console.debug(messageStatus);
