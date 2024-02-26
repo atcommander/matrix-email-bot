@@ -13,6 +13,7 @@ interface IEmailTarget {
 }
 
 export class EmailProcessor {
+    public waittime = 10;
     public constructor(private bot: MatrixBot, private db: DataStore) {
         if (config.mail.enabled) {
             mailin.start({
@@ -173,19 +174,27 @@ export class EmailProcessor {
                     }
 
                     let messageStatus;
-                    let messageRetries = 0;
+                    let messageRetries = 1;
                     do {
+                        await console.log("Waiting for " + messageStatus.retryAfterMs + " Ms...");
+                        await new Promise(f => setTimeout(f, this.waittime));
+
+                        await console.log('...Retry #' + messageRetries + ' of Message ' + message.email_id);
                         messageStatus = await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
 
-                        console.log(messageStatus);
+                        console.debug(messageStatus);
 
-                        if (messageStatus.retryAfterMs > 0) {
-                            await console.log("Waiting for " + messageStatus.retryAfterMs + " Ms...")
-                            setTimeout(() => {  console.log('...Resending Message'); }, messageStatus.retryAfterMs);
+                        if (messageStatus.retryAfterMs > this.waittime) {
+                            this.waittime = messageStatus.retryAfterMs;
+                        }
+                        else {
+                            this.waittime = 10;
                         }
 
                         messageRetries = messageRetries + 1;
-                    } while (messageStatus.statusCode != 200 || messageRetries >= 5);
+                    } while (messageStatus.statusCode != 200 && messageRetries <= 5);
+
+                    console.log('Message Sent ' + message.email_id);
 
                     msgType = MessageType.Fragment;
                 }
