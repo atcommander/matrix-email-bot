@@ -34,6 +34,7 @@ interface IConfig {
         homeserverUrl: string;
         accessToken: string;
         storagePath: string;
+        maxRetries: number;
     };
     mail: {
         enabled: boolean;

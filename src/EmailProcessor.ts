@@ -14,6 +14,7 @@ interface IEmailTarget {
 
 export class EmailProcessor {
     public waittime = 10;
+    public burst = 0;
     public constructor(private bot: MatrixBot, private db: DataStore) {
         if (config.mail.enabled) {
             mailin.start({
@@ -174,8 +175,11 @@ export class EmailProcessor {
                     }
 
                     let messageStatus;
-                    let messageRetries = 1;
+                    let messageRetries = 0;
                     do {
+                        messageRetries = messageRetries + 1;
+                        this.burst = this.burst + 1;
+
                         console.log("Waiting for " + this.waittime + " Ms...");
                         await new Promise(f => setTimeout(f, this.waittime));
 
@@ -187,14 +191,20 @@ export class EmailProcessor {
                         if (messageStatus.retryAfterMs > this.waittime) {
                             this.waittime = messageStatus.retryAfterMs;
                         }
-                        else {
-                            this.waittime = 10;
+
+                        if (this.burst >= 10) {
+                            this.waittime = this.waittime + 10000
                         }
+                    } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.maxRetries);
 
-                        messageRetries = messageRetries + 1;
-                    } while (messageStatus.statusCode != 200 && messageRetries <= 5);
-
-                    console.log('Message Sent ' + message.email_id);
+                    if (messageStatus.statusCode == 200) {
+                        this.waittime = 0;
+                        console.log('Message Sent ' + message.email_id);
+                    }
+                    else {
+                        console.log('Message Failed after ' + messageRetries + ' Tries');
+                        this.waittime = this.waittime + 5000
+                    }                        
 
                     msgType = MessageType.Fragment;
                 }
