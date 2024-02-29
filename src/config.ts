@@ -38,6 +38,7 @@ interface IConfig {
         failedWaitTime: number;
         burst: {
             messageThreshold: number;
+            length: number;
             waitTime: number;
         }
     };

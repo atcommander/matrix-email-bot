@@ -14,7 +14,9 @@ interface IEmailTarget {
 
 export class EmailProcessor {
     public waittime = 10;
-    public burst = 0;
+    public burstcount = 0;
+    public burststart = new Date().getTime();
+
     public constructor(private bot: MatrixBot, private db: DataStore) {
         if (config.mail.enabled) {
             mailin.start({
@@ -178,7 +180,7 @@ export class EmailProcessor {
                     let messageRetries = 0;
                     do {
                         messageRetries = messageRetries + 1;
-                        this.burst = this.burst + 1;
+                        this.burstcount = this.burstcount + 1;
 
                         console.log("Waiting for " + this.waittime + " Ms...");
                         await new Promise(f => setTimeout(f, this.waittime));
@@ -192,7 +194,13 @@ export class EmailProcessor {
                             this.waittime = messageStatus.retryAfterMs;
                         }
 
-                        if (this.burst >= config.matrix.burst.messageThreshold) {
+                        let elapsed = new Date().getTime() - this.burststart;
+
+                        if (elapsed > config.matrix.burst.length ) {
+                            this.burstcount = 0
+                        }
+
+                        if (this.burstcount >= config.matrix.burst.messageThreshold) {
                             this.waittime = this.waittime + config.matrix.burst.waitTime
                         }
                     } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.maxRetries);

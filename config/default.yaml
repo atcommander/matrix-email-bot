@@ -24,6 +24,9 @@ matrix:
     # The number of messages that will trigger an increase in wait times
     messageThreshold: 10
 
+    # Maximum Time Length of a Message Burst in Milliseconds
+    length: 50000
+
     # The amount of time in milliseconds to added after the burst threshold is reached
     waitTime: 10000
 
