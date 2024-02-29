@@ -35,6 +35,11 @@ interface IConfig {
         accessToken: string;
         storagePath: string;
         maxRetries: number;
+        failedWaitTime: number;
+        burst: {
+            messageThreshold: number;
+            waitTime: number;
+        }
     };
     mail: {
         enabled: boolean;

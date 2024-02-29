@@ -192,8 +192,8 @@ export class EmailProcessor {
                             this.waittime = messageStatus.retryAfterMs;
                         }
 
-                        if (this.burst >= 10) {
-                            this.waittime = this.waittime + 10000
+                        if (this.burst >= config.matrix.burst.messageThreshold) {
+                            this.waittime = this.waittime + config.matrix.burst.waitTime
                         }
                     } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.maxRetries);
 
@@ -203,7 +203,7 @@ export class EmailProcessor {
                     }
                     else {
                         console.log('Message Failed after ' + messageRetries + ' Tries');
-                        this.waittime = this.waittime + 5000
+                        this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 
                     msgType = MessageType.Fragment;

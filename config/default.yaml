@@ -11,6 +11,22 @@ matrix:
   # database.
   storagePath: "/data/storage"
 
+  # Number of Times the Bot will try resending a message before it fails the message
+  maxRetries: 5
+
+  # How many milliseconds the Bot will increase the wait time between message tries for a message
+  # that fails after hitting the maximum retries
+  failedWaitTime: 5000
+
+  # Configuration for handling large amounts of emails sent in a short amount of time
+  burst:
+
+    # The number of messages that will trigger an increase in wait times
+    messageThreshold: 10
+
+    # The amount of time in milliseconds to added after the burst threshold is reached
+    waitTime: 10000
+
 # The mail server configuration.
 mail:
   # Whether or not to run the mail server. If false, then the bot will rely on being fed messages
@@ -116,6 +132,7 @@ defaultRoomConfig:
   # message. By default this is turned off to avoid flooding the room with quoted messages.
   postReplies: false
 
+  # Whether to post emails when the body of the email is empty
   postEmpty: false
 
   # The message format for messages posted to the room. This format only applies to the first
