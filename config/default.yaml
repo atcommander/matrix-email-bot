@@ -2,7 +2,7 @@
 # be created prior to running the bot.
 matrix:
   # The homeserver URL for the bot. For example, https://matrix.org
-  homeserverUrl: "https://t2bot.io"
+  homeserverUrl: "https://example.com"
 
   # The access token for the bot that authenticates it on the above homeserver.
   accessToken: "YOUR_TOKEN_HERE"
@@ -12,7 +12,7 @@ matrix:
   storagePath: "/data/storage"
 
   # Number of Times the Bot will try resending a message before it fails the message
-  maxRetries: 5
+  maxRetries: 8
 
   # How many milliseconds the Bot will increase the wait time between message tries for a message
   # that fails after hitting the maximum retries
@@ -42,7 +42,7 @@ mail:
 
   # The accepted domain for the mail server. This is used to determine which email addresses can
   # be automatically mapped to rooms in Matrix.
-  domain: "email.t2bot.io"
+  domain: "email.example.com"
 
 # The web server configuration (used only for accessing messages in the web browser)
 web:
@@ -60,7 +60,7 @@ web:
 # might not be a room ID.
 customMailTargets:
   # Format: "support@matrix.org": ["!myRoomId:matrix.org", "!otherRoomId:t2l.io"]
-  "test@email.t2bot.io": ["ooXDTgcuwbbtVkAEJL:t2bot.io"]
+  "test@email.example.com": ["ooXDTgcuwbbtVkAEJL:example.com"]
 
 # The default room configuration. These are the options used when rooms under roomConfigs don't
 # specify some options. roomConfigs should only specify options that they override/change from
@@ -151,7 +151,7 @@ defaultRoomConfig:
   # $text_body       - The plain text body for the email (may be calculated if the sender didn't
   #                    send a proper plain text body)
   # $full_text_body  - The full body (including all fragments) as plain text
-  messageFormat: "$subject: <a href='https://email.t2bot.io/m/$id'>Click to view</a>"
+  messageFormat: "$subject: <a href='https://email.example.com/m/$id'>Click to view</a>"
 
   # The format used for fragments (replies, etc). Same condition variables as messageFormat.
   fragmentFormat: "$text_body"
@@ -160,7 +160,7 @@ defaultRoomConfig:
   # They are used to represent the 'plain text' version of the message. These are used over
   # the above two formats when sending plain text only messages and when sending the plain
   # text version of the matrix event (which is used by bridges, such as the IRC bridge).
-  #messagePlainFormat: "$subject | https://email.t2bot.io/m/$id"
+  #messagePlainFormat: "$subject | https://email.example.com/m/$id"
   #fragmentPlainFormat: "$text_body"
 
   # The antispam settings to use for the room
@@ -179,7 +179,7 @@ defaultRoomConfig:
 # should be put here for each room - all other settings are assumed to be the defaults.
 roomConfigs:
   # An example room configuration
-  "!ooXDTgcuwbbtVkAEJL:t2bot.io":
+  "!ooXDTgcuwbbtVkAEJL:example.com":
     allowFromAnyone: false
     allowedSenders:
     - "myemail@domain.com"
