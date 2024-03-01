@@ -30,7 +30,6 @@ export class EmailProcessor {
 
             mailin.on('message', (connection, data, content) => {
                 console.log("Message Found")
-                console.log(data);
                 this.processMessage(data).then();
             });
 
