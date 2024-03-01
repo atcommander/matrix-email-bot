@@ -17,3 +17,4 @@
 
 ## Quad 4
 * Add smtp client functionality
+* Add message queue
