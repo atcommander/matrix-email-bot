@@ -182,6 +182,10 @@ export class EmailProcessor {
                         messageRetries = messageRetries + 1;
                         this.burstcount = this.burstcount + 1;
 
+                        if (this.burstcount == 1) {
+                            this.burststart = new Date().getTime();
+                        }
+
                         console.log("Waiting for " + this.waittime + " Ms...");
                         await new Promise(f => setTimeout(f, this.waittime));
 
@@ -195,15 +199,16 @@ export class EmailProcessor {
                         }
 
                         let elapsed = new Date().getTime() - this.burststart;
+                        console.log("Burst Length: " + elapsed + " milliseconds");
 
                         if (elapsed > config.matrix.burst.length ) {
-                            this.burstcount = 0
+                            this.burstcount = 0;
                         }
 
                         if (this.burstcount >= config.matrix.burst.messageThreshold) {
-                            console.log("Burst Message Threshold Hit at " + this.burstcount + "/" + config.matrix.burst.messageThreshold)
-                            console.log("Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries")
-                            this.waittime = this.waittime + config.matrix.burst.waitTime
+                            console.log("Burst Message Threshold Hit at " + this.burstcount + "/" + config.matrix.burst.messageThreshold);
+                            console.log("Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries");
+                            this.waittime = this.waittime + config.matrix.burst.waitTime;
                         }
                     } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.maxRetries);
 
