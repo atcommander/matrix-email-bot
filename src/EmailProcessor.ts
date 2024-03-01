@@ -30,6 +30,7 @@ export class EmailProcessor {
 
             mailin.on('message', (connection, data, content) => {
                 console.log("Message Found")
+                console.log(data);
                 this.processMessage(data).then();
             });
 
@@ -214,10 +215,11 @@ export class EmailProcessor {
 
                     if (messageStatus.statusCode == 200) {
                         this.waittime = 0;
-                        console.log('Message Sent ' + message.email_id);
+                        console.log('Message Sent from ' + msg.from_email);
                     }
                     else {
                         console.log('Message Failed after ' + messageRetries + ' Tries');
+                        console.log('From: ' + msg.from_email + 'Subject: ' + msg.subject);
                         this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 
