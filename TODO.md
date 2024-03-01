@@ -1,10 +1,10 @@
 # To Do List
 ## Quad 1
 * Improve logging
-* Added logging level configurability
 * Identify reasons for crashes
 
 ## Quad 2
+* Added logging level configurability
 * Replace node-mailin
 * work with upstream to replace deprecated modules in matrix-bot-sdk
   * request
