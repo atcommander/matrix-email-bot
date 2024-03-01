@@ -134,7 +134,10 @@ export class EmailProcessor {
                 const htmlBody = message.html;
                 const textBody = message.text;
                 const fullTextBody = message.text;
-                const date = message.headers.date
+                const date = message.headers.date;
+
+                console.log(message.headers);
+                console.log(date);
 
                 let textSegments = [textBody];
 
