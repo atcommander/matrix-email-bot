@@ -1,10 +1,10 @@
-FROM node:21-bookworm AS builder
+FROM node:20-bookworm AS builder
 COPY . /tmp/src
 WORKDIR /tmp/src
 RUN yarn install
 RUN yarn build
 
-FROM node:21-bookworm
+FROM node:20-bookworm
 
 RUN mkdir /data
 WORKDIR /app
