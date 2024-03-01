@@ -1,6 +1,6 @@
 {
   "name": "matrix-email-bot",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/turt2live/matrix-email-bot.git"
+    "url": "git+https://github.com/darkdecoy/matrix-email-bot.git"
   },
   "dependencies": {
     "@umpacken/node-mailin": "^2.7.0",
