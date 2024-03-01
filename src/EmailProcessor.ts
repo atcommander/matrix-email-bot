@@ -220,7 +220,7 @@ export class EmailProcessor {
                     }
                     else {
                         console.log('Message Failed after ' + messageRetries + ' Tries');
-                        console.log('From: ' + msg.from_email + 'Subject: ' + msg.subject + 'Date: ' + msg.date);
+                        console.log('From: ' + msg.from_email + ' Subject: ' + msg.subject + ' Date: ' + msg.date);
                         this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 
