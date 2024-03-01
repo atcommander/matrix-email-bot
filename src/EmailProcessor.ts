@@ -135,6 +135,7 @@ export class EmailProcessor {
                 const htmlBody = message.html;
                 const textBody = message.text;
                 const fullTextBody = message.text;
+                const date = message.headers.date
 
                 let textSegments = [textBody];
 
@@ -164,6 +165,7 @@ export class EmailProcessor {
                         full_text_body: fullTextBody,
                         is_html: isHtml,
                         target_room: roomConfig.roomId,
+                        date: date,
                     });
                 }
 
@@ -219,7 +221,7 @@ export class EmailProcessor {
                     }
                     else {
                         console.log('Message Failed after ' + messageRetries + ' Tries');
-                        console.log('From: ' + msg.from_email + 'Subject: ' + msg.subject);
+                        console.log('From: ' + msg.from_email + 'Subject: ' + msg.subject + 'Date: ' + msg.date);
                         this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 

@@ -15,6 +15,7 @@ export interface IDbMessage {
     full_text_body: string;
     is_html: boolean;
     target_room: string;
+    date: string;
 }
 
 export interface IDbAttachment {
