@@ -129,7 +129,7 @@ export class EmailProcessor {
 
                 rooms.push(roomConfig.roomId);
 
-                const contentTypeHeader = (message.headers['content-type'] || "text/plain").toLowerCase();
+                const contentTypeHeader = (message.headers['content-type']?.value || "text/plain").toLowerCase();
                 const isHtml = contentTypeHeader.indexOf('text/plain') !== 0;
                 const htmlBody = message.html;
                 const textBody = message.text;
