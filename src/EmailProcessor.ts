@@ -211,7 +211,7 @@ export class EmailProcessor {
                             console.log("Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries");
                             this.waittime = this.waittime + config.matrix.burst.waitTime;
                         }
-                    } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.maxRetries);
+                    } while (messageStatus.statusCode != 200 && messageRetries <= config.matrix.messageTries);
 
                     if (messageStatus.statusCode == 200) {
                         this.waittime = 0;

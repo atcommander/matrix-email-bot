@@ -11,8 +11,8 @@ matrix:
   # database.
   storagePath: "/data/storage"
 
-  # Number of Times the Bot will try resending a message before it fails the message
-  maxRetries: 8
+  # Number of Times the Bot will try sending a message before it fails the message
+  messageTries: 8
 
   # How many milliseconds the Bot will increase the wait time between message tries for a message
   # that fails after hitting the maximum retries

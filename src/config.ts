@@ -34,7 +34,7 @@ interface IConfig {
         homeserverUrl: string;
         accessToken: string;
         storagePath: string;
-        maxRetries: number;
+        messageTries: number;
         failedWaitTime: number;
         burst: {
             messageThreshold: number;
