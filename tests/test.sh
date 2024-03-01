@@ -1,13 +1,11 @@
 #!/bin/bash
 
-email_host="test13"
+email_host=$1
+rate_limit=$2
+src=$3
+
 burst=0
-rate_limit=20
 sent=0
-
-read -p "Enter Path: " src
-
-echo $src
 
 for i in $( ls $src | grep .eml )
 do
