@@ -193,9 +193,8 @@ export class EmailProcessor {
                         console.log('...Try #' + messageRetries + ' of Message ' + message.email_id);
                         messageStatus = await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
 
-                        console.debug(messageStatus);
-
                         if (messageStatus.retryAfterMs > this.waittime) {
+                            console.log('Increasing Wait Time to ' + messageStatus.retryAfterMs)
                             this.waittime = messageStatus.retryAfterMs;
                         }
 
@@ -211,6 +210,8 @@ export class EmailProcessor {
                             console.log("Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries");
                             this.waittime = this.waittime + config.matrix.burst.waitTime;
                         }
+
+                        console.log(messageStatus.statusCode + ' ' + messageStatus.message)
                     } while (messageStatus.statusCode != 200 && messageRetries < config.matrix.messageTries);
 
                     if (messageStatus.statusCode == 200) {
