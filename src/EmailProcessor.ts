@@ -34,7 +34,7 @@ export class EmailProcessor {
             });
 
             mailin.on("error", async error => {
-                console.log(error);
+                console.log('smtp error: ' + error);
             });
         }
     }
