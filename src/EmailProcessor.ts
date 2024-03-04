@@ -21,7 +21,7 @@ export class EmailProcessor {
         if (config.mail.enabled) {
             mailin.start({
                 port: config.mail.port,
-                logLevel: "silly",
+                logLevel: config.mail.logLevel,
                 smtpOptions: {
                     banner: "",
                     disableDNSValidation: false

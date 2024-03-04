@@ -46,6 +46,7 @@ interface IConfig {
         enabled: boolean;
         port: number;
         domain: string;
+        logLevel: string;
     };
     web: {
         port: number;

@@ -44,6 +44,9 @@ mail:
   # be automatically mapped to rooms in Matrix.
   domain: "email.example.com"
 
+  # Set the Log Level for email processing
+  logLevel: "debug"
+
 # The web server configuration (used only for accessing messages in the web browser)
 web:
   # The port to run the server on
