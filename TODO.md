@@ -4,15 +4,16 @@
 * Identify reasons for crashes
 
 ## Quad 2
-* Added logging level configurability
+* Add logging level configurability
 * Replace node-mailin
 * work with upstream to replace deprecated modules in matrix-bot-sdk
   * request
   * request-promise
 
 ## Quad 3
-* Added the capture of problem emails
-* Added bot registration functionality
+* Add the capture of problem emails
+* Add bot registration functionality
+* Add metric of time between receiving email and matrix message being delivered to server
 * Fix issue with attachments
 
 ## Quad 4
