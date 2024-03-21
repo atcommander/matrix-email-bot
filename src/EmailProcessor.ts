@@ -55,6 +55,7 @@ export class EmailProcessor {
 
         const rooms: string[] = [];
         console.log("Processing targets...");
+        console.log("Available Targets..." + targets.join(', '))
         for (const target of targets) {
             if (!target.address) continue;
 
