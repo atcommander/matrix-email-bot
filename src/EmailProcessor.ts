@@ -56,7 +56,7 @@ export class EmailProcessor {
         const rooms: string[] = [];
         console.log("Processing targets...");
         for (const target of targets) {
-            console.log("Processing Target ", target, "...");
+            console.log("Processing Target ", target.address, "...");
             if (!target.address) continue;
 
             const roomConfigs = getRoomConfigsForTarget(target.address, target.source);
