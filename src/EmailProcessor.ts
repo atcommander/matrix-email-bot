@@ -54,9 +54,9 @@ export class EmailProcessor {
         const primaryFrom = message.from.value[0];
 
         const rooms: string[] = [];
-        console.log("message.messageId + ": " + Processing targets...");
+        console.log(message.messageId + ": " + "Processing targets...");
         for (const target of targets) {
-            console.log("message.messageId + ": " + Processing Target ", target.address, "...");
+            console.log(message.messageId + ": " + "Processing Target ", target.address, "...");
             if (!target.address) continue;
 
             const roomConfigs = getRoomConfigsForTarget(target.address, target.source);
