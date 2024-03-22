@@ -7,7 +7,7 @@ src=$3
 burst=0
 sent=0
 
-for i in $( ls $src | grep .eml )
+for i in $( ls $src | grep .eml | shuf )
 do
 
 start=$(date)
