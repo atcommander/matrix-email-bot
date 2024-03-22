@@ -29,7 +29,7 @@ export class EmailProcessor {
             });
 
             mailin.on('message', (connection, data, content) => {
-                console.log("Message Found")
+                console.log("id: " + data.messageId + " message: " + "Message Found")
                 this.processMessage(data).then();
             });
 
@@ -41,7 +41,7 @@ export class EmailProcessor {
 
     public async processMessage(message: any) {
         if (await this.db.doesMessageExist(message.messageId)) {
-            console.log(message.messageId + ": " + "Message Already Processed");
+            console.log("id: " + message.messageId + " message: " + "Message Already Processed");
             return;
         }
 
@@ -54,9 +54,8 @@ export class EmailProcessor {
         const primaryFrom = message.from.value[0];
 
         const rooms: string[] = [];
-        console.log(message.messageId + ": " + "Processing targets...");
         for (const target of targets) {
-            console.log(message.messageId + ": " + "Processing Target ", target.address, "...");
+            console.log("id: " + message.messageId + " message: " + "Processing Target ", target.address);
             if (!target.address) continue;
 
             const roomConfigs = getRoomConfigsForTarget(target.address, target.source);
@@ -87,7 +86,7 @@ export class EmailProcessor {
                         if (!fromAddress.address) continue;
 
                         if (!roomConfig.allowedSenders.includes(fromAddress.address.toLowerCase())) {
-                            console.log(message.messageId + ": " + fromAddress.address, ' is not in Alllowed Senders List')
+                            console.log("id: " + message.messageId + " message: " + fromAddress.address, ' is not in Alllowed Senders List')
                             allowed = false;
                             break;
                         }
@@ -98,7 +97,7 @@ export class EmailProcessor {
                     if (!fromAddress.address) continue;
 
                     if (roomConfig.blockedSenders.includes(fromAddress.address.toLowerCase())) {
-                        console.log(message.messageId + ": " + fromAddress.address, ' is in Blocked Senders List')
+                        console.log("id: " + message.messageId + " message: " + fromAddress.address, ' is in Blocked Senders List')
                         allowed = false;
                         break;
                     }
@@ -188,40 +187,39 @@ export class EmailProcessor {
                             this.burststart = new Date().getTime();
                         }
 
-                        console.log(message.email_id + ": " + "Waiting for " + this.waittime + " Ms...");
+                        console.log("id: " + message.email_id + " message: " + "Waiting for " + this.waittime + " Ms");
                         await new Promise(f => setTimeout(f, this.waittime));
 
-                        console.log(message.email_id + ": " + '...Try #' + messageRetries + ' of Message ' + message.email_id);
+                        console.log("id: " + message.email_id + " message: " + 'Try ' + messageRetries);
                         messageStatus = await this.bot.sendMessage(msg, roomConfig.roomId, msgType);
 
                         if (messageStatus.retryAfterMs > this.waittime) {
-                            console.log(message.email_id + ": " + 'Increasing Wait Time to ' + messageStatus.retryAfterMs)
+                            console.log("id: " + message.email_id + " message: " + 'Increasing Wait Time to ' + messageStatus.retryAfterMs)
                             this.waittime = messageStatus.retryAfterMs;
                         }
 
                         let elapsed = new Date().getTime() - this.burststart;
-                        console.log(message.email_id + ": " + "Burst Length: " + elapsed + " milliseconds");
+                        console.log("id: " + message.email_id + " message: " + "Burst Length: " + elapsed + " milliseconds");
 
                         if (elapsed > config.matrix.burst.length ) {
                             this.burstcount = 0;
                         }
 
                         if (this.burstcount >= config.matrix.burst.messageThreshold) {
-                            console.log(message.email_id + ": " + "Burst Message Threshold Hit at " + this.burstcount + "/" + config.matrix.burst.messageThreshold);
-                            console.log(message.email_id + ": " + "Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries");
+                            console.log("id: " + message.email_id + " message: " + "Burst Message Threshold Hit at " + this.burstcount + "/" + config.matrix.burst.messageThreshold);
+                            console.log("id: " + message.email_id + " message: " + "Adding " + config.matrix.burst.waitTime + " milliseconds to wait time between message tries");
                             this.waittime = this.waittime + config.matrix.burst.waitTime;
                         }
 
-                        console.log(message.email_id + ": " + "Status Code: " + messageStatus.statusCode + ' Message: ' + messageStatus.message)
+                        console.log("id: " + message.email_id + " message: " + "Status Code: " + messageStatus.statusCode + ' Message: ' + messageStatus.message)
                     } while (messageStatus.statusCode != 200 && messageRetries < config.matrix.messageTries);
 
                     if (messageStatus.statusCode == 200) {
                         this.waittime = 0;
-                        console.log(message.email_id + ": " + 'Message Sent from ' + msg.from_email);
+                        console.log("id: " + message.email_id + " message: " + 'Message Sent from ' + msg.from_email);
                     }
                     else {
-                        console.log(message.email_id + ": " + 'Message Failed after ' + messageRetries + ' Tries');
-                        console.log(message.email_id + ": " + 'From: ' + msg.from_email + ' Subject: ' + msg.subject + ' Date: ' + msg.date);
+                        console.log("id: " + message.email_id + " message: " + 'Message Failed after ' + messageRetries + ' Tries' + 'From: ' + msg.from_email + ' Subject: ' + msg.subject + ' Date Received: ' + msg.date);
                         this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 
