@@ -55,7 +55,7 @@ export class EmailProcessor {
 
         const rooms: string[] = [];
         for (const target of targets) {
-            console.log("id: " + message.messageId + " message: " + "Processing Target ", target.address);
+            console.log("id: " + message.messageId + " message: " + "Processing Target", target.address);
             if (!target.address) continue;
 
             const roomConfigs = getRoomConfigsForTarget(target.address, target.source);
@@ -219,7 +219,7 @@ export class EmailProcessor {
                         console.log("id: " + message.email_id + " message: " + 'Message Sent from ' + msg.from_email);
                     }
                     else {
-                        console.log("id: " + message.email_id + " message: " + 'Message Failed after ' + messageRetries + ' Tries' + 'From: ' + msg.from_email + ' Subject: ' + msg.subject + ' Date Received: ' + msg.date);
+                        console.log("id: " + message.email_id + " message: " + 'Message Failed after ' + messageRetries + ' Tries' + ' From: ' + msg.from_email + ' Subject: ' + msg.subject + ' Date Received: ' + msg.date);
                         this.waittime = this.waittime + config.matrix.failedWaitTime
                     }                        
 
